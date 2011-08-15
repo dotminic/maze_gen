@@ -12,7 +12,7 @@ CFLAGS	=	-W -Wall -ansi -pedantic -O3
 
 $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ)
-		mv $(NAME) ../bin
+		cp $(NAME) ../bin
 
 all:		$(NAME)
 

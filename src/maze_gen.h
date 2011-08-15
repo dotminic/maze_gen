@@ -2,6 +2,8 @@
 # define __MAZEGEN_H__
 
 #define	F_DENSITY	4
+#define	M_LEFT		1
+#define M_RIGHT		2
 
 typedef struct	s_point
 {
