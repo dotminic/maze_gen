@@ -121,9 +121,7 @@ int		build_maze( t_maze *maze )
   start.x = 0;
   start.y = maze->h / 2;
   end.x = maze->w - 1;
-  end.y = 1 + rand() % (maze->h - M_LEFT);
-  maze->cells[start.y][start.x] = 'S';
-  maze->cells[end.y][end.x] = 'E';
+  end.y = 1 + rand() % (maze->h - M_RIGHT);
   printf("s:%d,%d-e:%d,%d\n", start.x, start.y, end.x, end.y);
 
   waypoints = malloc(maze->d * sizeof(t_point));
@@ -131,7 +129,7 @@ int		build_maze( t_maze *maze )
     return 0;
   for (i = 0; i < maze->d; i++)
     {
-      waypoints[i].x = M_LEFT + rand() % (maze->w - M_RIGHT - 1);
+      waypoints[i].x = M_LEFT + rand() % (maze->w - M_RIGHT);
       waypoints[i].y = M_LEFT + rand() % (maze->h - M_RIGHT);
     }
   shell_sort(waypoints, maze->d);
@@ -139,6 +137,8 @@ int		build_maze( t_maze *maze )
   if (maze->s == 0)
     _c(maze);
   build_path(waypoints, &start, &end, maze, '.');
+  maze->cells[start.y][start.x] = 'S';
+  maze->cells[end.y][end.x] = 'E';
   free(waypoints);
   return 1;
 }
