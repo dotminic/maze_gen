@@ -121,7 +121,7 @@ int		build_maze( t_maze *maze )
   start.x = 0;
   start.y = maze->h / 2;
   end.x = maze->w - 1;
-  end.y = (maze->h - 2 < 0) ? 0 : maze->h - 2;
+  end.y = 1 + rand() % (maze->h - M_LEFT);
   maze->cells[start.y][start.x] = 'S';
   maze->cells[end.y][end.x] = 'E';
   printf("s:%d,%d-e:%d,%d\n", start.x, start.y, end.x, end.y);
@@ -129,7 +129,6 @@ int		build_maze( t_maze *maze )
   waypoints = malloc(maze->d * sizeof(t_point));
   if (waypoints == NULL)
     return 0;
-  srand((unsigned int)time(NULL));
   for (i = 0; i < maze->d; i++)
     {
       waypoints[i].x = M_LEFT + rand() % (maze->w - M_RIGHT - 1);
@@ -153,6 +152,7 @@ void	init_maze( t_maze *maze, int w,
   maze->f = d * F_DENSITY;
   maze->s = solid;
   maze->cells = NULL;
+  srand((unsigned int)time(NULL));
 }
 
 void	free_maze( t_maze *maze )
