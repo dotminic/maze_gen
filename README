@@ -12,3 +12,33 @@ maze_gen -w -h -d -solid
 
 -solid	solid: sets if the maze will try to remove some of the walls grouped
 	together or not.
+
+
+example output:
+w:50-h:25
+s:0,12-e:49,14
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x................xxxxx...........................x
+x.......................................xx.x..x..x
+x.........................xx.xxxx.xx.xxxxx.x..x.xx
+x.xxx.xxxxxx..xx.xxxxx..x.xx.xxxx.xx.xxxxx.xx.x.xx
+x.xxx.xxx.xx..xx.xxxxx.................xxx.x..x.xx
+x..........x..xx.xxxxx..x.xx.xxxx.xx.xxx.x.x..x.xx
+x.xxx.xxx.xx..xx.xxxxx.....................x.xx.xx
+x.xxx.xxx.xx..xx.xxxxx..x.xx.............xxx.xx.xx
+x.xxx.xxx.xx............x.xx.xxx..xx.xxx.xxx.xx.xx
+x......xx.xx...x.xxxxx..x.xx.xxx..xx.xxx.xxx.xx.xx
+x.xxx..xx.xx...x.xxxxx..x.xx.xxx..xx.xxx.xxx.xx.xx
+S..............x.xxxxx.xx.xx.xxx..xx.xxx.xxx.xx.xx
+x.xxx..xx.xx...x..xxxx.xx.xx.xxx..xx.xxx.....xx.xx
+x.xxx..........xx.xxxx.xx.x..........xx...........
+x.xxx...x.x...............xx.xxxx.xxxxx..x......xx
+x.x.x...x.xxx..xx.xxxx.xxxxx.xxxx.xxxxx..xxxxx..xx
+x.x.xx..x.xxx..xx.xxxx.xxxxx.............xxxxx..xx
+x.x.xx..x...........xx.xxxxxxxxxx.xxxxxx.xxxxxx.xx
+x.x.xx............xxxx.xxxxxxxxxx.xxxxxx.xxxxxx.xx
+x.x.xx....xxx.....xxxx.xxxxxxxxx.........xxxxxx.xx
+x.x.xx....xxx...xxxxxx.xxxxxxxxxx..xxxxx........xx
+x...............................................xx
+x..xxx..xxxxxxxxxxxxxxxxxxxxxx..................xx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
