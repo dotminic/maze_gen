@@ -7,8 +7,8 @@
 
 typedef struct	s_point
 {
-  short		x;
-  short		y;
+  int		x;
+  int		y;
 }		t_point;
 
 
@@ -18,10 +18,12 @@ typedef struct	s_maze
   int		h;		/* height */
   int		d;		/* density */
   int		f;		/* num fake points */
+  char		s;		/* is the maze 'solid' */
   char		**cells;
 }		t_maze;
 
-void	init_maze( t_maze *maze, int w, int h, int d );
+void	init_maze( t_maze *maze, int w,
+		   int h, int d, int solid );
 void	free_maze( t_maze *maze );
 int	build_maze( t_maze *maze );
 

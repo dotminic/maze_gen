@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <time.h>
 #include "maze_gen.h"
 #include "sort.h"
@@ -19,7 +18,30 @@ static int	get_dir_index()
   return index;
 }
 
-static void	_b( int n_sections,  t_maze *maze )
+static void	_c( t_maze *maze )
+{
+  int		i;
+  int		j;
+
+  for (i = 1; i < maze->h - 1; i++)
+    {
+      for (j = 1; j < maze->w - 1; j++)
+	{
+	  if (maze->cells[i - 1][j] == '.' &&
+	      maze->cells[i + 1][j] == '.' &&
+	      maze->cells[i][j - 1] == '.' &&
+	      maze->cells[i][j + 1] == '.')
+	    maze->cells[i][j] = 'x';
+	  if (maze->cells[i - 1][j] == 'x' &&
+	      maze->cells[i + 1][j] == 'x' &&
+	      maze->cells[i][j - 1] == 'x' &&
+	      maze->cells[i][j + 1] == 'x')
+	    maze->cells[i][j] = '.';
+	}
+    }
+}
+
+static void	draw_rand_walls( t_maze *maze )
 {
   int		i;
   int		j;
@@ -30,7 +52,7 @@ static void	_b( int n_sections,  t_maze *maze )
   int		n_walls;
   int		wall_len;
 
-  for (k = 0; k < n_sections; k++)
+  for (k = 0; k < maze->f; k++)
     {
       n_walls = 3 + rand() %  10;
       x = M_LEFT + rand() % (maze->w - M_RIGHT);
@@ -43,8 +65,8 @@ static void	_b( int n_sections,  t_maze *maze )
 	  for (j = 0; j < wall_len; j++)
 	    {
 	      maze->cells[y][x] = '.';
-	      if (x > M_LEFT && x < maze->w - M_RIGHT) x += g_dir[index][0];
-	      if (y > M_LEFT && y < maze->h - M_RIGHT) y += g_dir[index][1];
+	      if (x > M_LEFT && x < maze->w - M_RIGHT - 1) x += g_dir[index][0];
+	      if (y > M_LEFT && y < maze->h - M_RIGHT - 1) y += g_dir[index][1];
 	    }
 	}
     }
@@ -85,6 +107,7 @@ int		build_maze( t_maze *maze )
   t_point	end;
   t_point	*waypoints;
 
+  printf("w:%d-h:%d\n", maze->w, maze->h);
   maze->cells = malloc(maze->h * sizeof(char *));
   if (maze->cells == NULL)
     return 0;
@@ -94,36 +117,41 @@ int		build_maze( t_maze *maze )
       for (j = 0; j < maze->w; j++)
 	maze->cells[i][j] = 'x';
     }
+
   start.x = 0;
   start.y = maze->h / 2;
   end.x = maze->w - 1;
   end.y = (maze->h - 2 < 0) ? 0 : maze->h - 2;
-  /*
-    maze->cells[start.y][start.x] = 'S';
-    maze->cells[end.y][end.x] = 'E';
-  */
+  maze->cells[start.y][start.x] = 'S';
+  maze->cells[end.y][end.x] = 'E';
+  printf("s:%d,%d-e:%d,%d\n", start.x, start.y, end.x, end.y);
+
   waypoints = malloc(maze->d * sizeof(t_point));
   if (waypoints == NULL)
     return 0;
   srand((unsigned int)time(NULL));
   for (i = 0; i < maze->d; i++)
     {
-      waypoints[i].x = M_LEFT + rand() % (maze->w - M_RIGHT);
+      waypoints[i].x = M_LEFT + rand() % (maze->w - M_RIGHT - 1);
       waypoints[i].y = M_LEFT + rand() % (maze->h - M_RIGHT);
     }
   shell_sort(waypoints, maze->d);
-  _b(maze->f, maze);
-  build_path(waypoints, &start, &end, maze, '-');
+  draw_rand_walls(maze);
+  if (maze->s == 0)
+    _c(maze);
+  build_path(waypoints, &start, &end, maze, '.');
   free(waypoints);
   return 1;
 }
 
-void	init_maze( t_maze *maze, int w, int h, int d )
+void	init_maze( t_maze *maze, int w,
+		   int h, int d, int solid )
 {
   maze->w = w;
   maze->h = h;
   maze->d = d;
   maze->f = d * F_DENSITY;
+  maze->s = solid;
   maze->cells = NULL;
 }
 

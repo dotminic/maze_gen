@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#ifdef _WIN32
+# include <io.h>
+#define write	_write
+#else
+# include <unistd.h>
+#endif
 #include "maze_gen.h"
-
-void	print_usage()
-{
-  puts("usage: -width -height -density");
-}
 
 void	print_maze( t_maze *maze )
 {
@@ -25,19 +25,14 @@ int		main( int argc, char **argv )
 {
   t_maze	maze;
 
-  if (argc != 4)
-    {
-      print_usage();
-      return 0;
-    }
+  if (argc != 5)
+    puts("usage: -width -height -density -solid");
   else
     {
-      init_maze(&maze, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
-      printf("generating %d*%d maze...\n", maze.w, maze.h);
+      init_maze(&maze, atoi(argv[1]), atoi(argv[2]),
+		atoi(argv[3]), atoi(argv[4]));
       if (build_maze(&maze))
-	{
-	  print_maze(&maze);
-	}
+	print_maze(&maze);
     }
   return 0;
 }

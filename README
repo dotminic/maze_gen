@@ -1,1 +1,14 @@
-Quick and dirty maze generator that uses brownian motion to draw dead ends and fake/random corridors
+Quick and dirty maze generator that uses brownian motion to draw dead ends and
+fake/random corridors.
+
+maze_gen -w -h -d -solid
+
+-w	width of the maze
+
+-h	height of the maze
+
+-d	density: sets the number of corridors that make up the path from the
+	start to the exit. Also used to set the number of dead end paths.
+
+-solid	solid: sets if the maze will try to remove some of the walls grouped
+	together or not.
